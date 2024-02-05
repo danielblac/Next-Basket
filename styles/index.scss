@@ -10,11 +10,6 @@ $color-secondary: #737373;
 $color-subheader: #00323a;
 $color-body: #252b42;
 $color-border: #e6e6e6;
-/* $color-active: #043740; */
-$color-body-faded: #bdbdbd;
-$color-border-faded: #545f7d33;
-$color-black-faded: #0000001a;
-$color-id-pghoto: #1682950d;
 
 $background-primary: #fff;
 $background-active: #38cccc33;
@@ -88,7 +83,7 @@ $background-input: #f9f9f9;
 
 html,
 body {
-  max-width: 100vw;
+  width: 100vw;
   min-height: 100vh;
   font-family: "Montserrat", sans-serif;
   background: $background-primary;
@@ -137,8 +132,11 @@ a {
     background-color: $background-secondary;
     color: $background-primary;
     height: 3.6em;
-    padding: 0 2.5em;
+    padding: 0 4em;
     @include flex_center();
+    @include respond(mini-tablet) {
+      display: none;
+    }
 
     .social-contact {
       @include flex_basic();
@@ -164,8 +162,11 @@ a {
   .header-nav {
     @include flex_center();
     height: 3.6em;
-    padding: 0 2.5em;
+    padding: 0 4em;
     margin-top: 0.5em;
+    @include respond(mini-tablet) {
+      display: none;
+    }
     .nav {
       @include flex_basic();
       gap: 8em;
@@ -202,29 +203,122 @@ a {
       }
     }
   }
+  .nav-mobile {
+    display: none;
+    @include respond(mini-tablet) {
+      display: flex;
+      justify-content: space-between;
+      padding: 2em;
+      nav {
+        position: absolute;
+        top: 5em;
+        left: 0;
+        width: 100%;
+        height: 300px;
+        background-color: white;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+        align-items: center;
+        margin-top: 3em;
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+        .user {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5em;
+          color: $color-primary;
+          .user-login {
+            @include flex_basic();
+            align-items: center;
+          }
+          .search-icon {
+            margin-top: -3px;
+          }
+          .cart {
+            @include flex_basic();
+            align-items: center;
+            gap: 0.1em;
+          }
+          .wishlist {
+            @include flex_basic();
+            align-items: center;
+            gap: 0.1em;
+          }
+        }
+      }
+    }
+  }
 }
 
+// HOMEPAGE
 .main {
+  width: 100%;
   .furniture {
-    padding: 3em 5em;
+    padding: 3em 8em;
     width: 100%;
+    height: 100%;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+    }
     .furniture-container {
       @include flex_basic();
       gap: 1em;
       width: 100%;
+      @include respond(mini-tablet) {
+        flex-direction: column;
+      }
       .plates {
         width: 40%;
+        @include respond(mini-tablet) {
+          width: 100%;
+          height: 300px;
+        }
         img {
           width: 100%;
+          height: 100%;
+        }
+        .plates-d {
+          display: block;
+          @include respond(mini-tablet) {
+            display: none;
+          }
+        }
+        .plates-m {
+          display: none;
+          @include respond(mini-tablet) {
+            display: block;
+          }
         }
       }
 
       .vase-cups {
         width: 60%;
+        @include respond(mini-tablet) {
+          width: 100%;
+          height: 300px;
+        }
         .vase {
           width: 100%;
+          // height: 100%;
           img {
             width: 100%;
+          }
+          .vase-d {
+            display: block;
+            @include respond(mini-tablet) {
+              display: none;
+            }
+          }
+          .vase-m {
+            display: none;
+            @include respond(mini-tablet) {
+              display: block;
+            }
           }
         }
         .light-cup {
@@ -232,17 +326,31 @@ a {
           display: flex;
           justify-content: space-between;
           gap: 1em;
-          margin-top: 0.75em;
+          margin-top: 2em;
+          @include respond(mini-tablet) {
+            flex-direction: column;
+            margin-top: 1em;
+          }
           .lights {
             width: 50%;
+            @include respond(mini-tablet) {
+              width: 100%;
+              height: 300px;
+            }
             img {
               width: 100%;
+              height: 100%;
             }
           }
           .cups {
             width: 50%;
+            @include respond(mini-tablet) {
+              width: 100%;
+              height: 300px;
+            }
             img {
               width: 100%;
+              height: 100%;
             }
           }
         }
@@ -250,7 +358,11 @@ a {
     }
   }
   .products {
-    padding: 3em 5em;
+    padding: 3em 8em;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+      margin-top: 40em;
+    }
     a {
       color: inherit;
       text-decoration: none;
@@ -279,6 +391,10 @@ a {
   }
   .services {
     padding: 3em 8em;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+      margin-top: 3em;
+    }
     .product-header {
       @include product_header();
     }
@@ -292,6 +408,9 @@ a {
   }
   .posts {
     padding: 1em 8em;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+    }
     .product-header {
       @include product_header();
     }
@@ -316,13 +435,23 @@ a {
   }
   .testimonies {
     padding: 3em 8em;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+    }
     .testimonies-container {
       padding: 5em 0 3em;
       display: flex;
       width: 100%;
       gap: 4em;
+      @include respond(mini-tablet) {
+        flex-direction: column;
+        gap: 2em;
+      }
       .testimony {
         width: 50%;
+        @include respond(mini-tablet) {
+          width: 100%;
+        }
         .user-testimony {
           .testimony-container {
             display: flex;
@@ -338,6 +467,14 @@ a {
       }
       .test-photo {
         width: 50%;
+        @include respond(mini-tablet) {
+          width: 100%;
+        }
+        img {
+          @include respond(mini-tablet) {
+            width: 100%;
+          }
+        }
       }
     }
   }
@@ -348,11 +485,19 @@ a {
     background-position: top center;
     width: 100%;
     height: 640px;
+    @include respond(mini-tablet) {
+      background-size: 300% 100%;
+      height: 100%;
+      padding: 0 2.5em;
+    }
     .advert {
-      padding: 8em 10em 7em;
+      padding: 8em 0 7em;
       display: flex;
       flex-direction: column;
       align-items: center;
+      @include respond(mini-tablet) {
+        padding: 7em 0;
+      }
       .paragraph {
         max-width: 500px;
       }
@@ -360,13 +505,20 @@ a {
   }
   .footer-pad {
     padding-bottom: 30em;
+    @include respond(mini-tablet) {
+      padding-bottom: 80.5em;
+    }
   }
 }
 
+// PRODUCTS PAGE
 .products-details-page {
   .breadcrumb {
     padding: 2em 10em;
     background-color: $background-footer;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+    }
     a {
       color: inherit;
       text-decoration: none;
@@ -382,8 +534,20 @@ a {
     padding: 0 10em;
     background-color: $background-footer;
     margin-top: -1em;
+    @include respond(mini-tablet) {
+      padding: 0 2.5em;
+      flex-direction: column;
+    }
     .products-photo {
       width: 50%;
+      @include respond(mini-tablet) {
+        width: 100%;
+      }
+      .carousel-image {
+        @include respond(mini-tablet) {
+          height: 22em;
+        }
+      }
       .image-list {
         margin-top: 1em;
         display: flex;
@@ -396,6 +560,11 @@ a {
       padding: 1em;
       gap: 0.5em;
       width: 50%;
+      @include respond(mini-tablet) {
+        width: 100%;
+        padding: 0.5em 0 0 1.5em;
+        gap: 1em;
+      }
       .rating {
         @include flex_products();
       }
@@ -404,12 +573,18 @@ a {
       }
       .line-break {
         padding-top: 6em;
+        @include respond(mini-tablet) {
+          padding-top: 0;
+        }
       }
       .select-options {
         padding-top: 3em;
         display: flex;
         align-items: center;
         gap: 1em;
+        @include respond(mini-tablet) {
+          padding-top: 0;
+        }
         .icon-avatar {
           width: 2.5em;
           height: 2.5em;
@@ -427,6 +602,9 @@ a {
   }
   .products-description {
     padding: 0 10em;
+    @include respond(mini-tablet) {
+      padding: 0 2.5em;
+    }
     .desc-header {
       display: flex;
       justify-content: center;
@@ -434,12 +612,40 @@ a {
       border-bottom: 1px solid $color-border;
       gap: 4em;
       height: 5.5em;
+      @include respond(mini-tablet) {
+        padding: 0 1em;
+        gap: 1em;
+      }
       .desc-link {
         cursor: pointer;
+        @include respond(mini-tablet) {
+          display: none;
+        }
+      }
+      .desc-link-mobile {
+        cursor: pointer;
+        display: none;
+        @include respond(mini-tablet) {
+          display: flex;
+          font-size: 14px;
+        }
       }
       .review {
         display: flex;
         gap: 0.5em;
+        cursor: pointer;
+        @include respond(mini-tablet) {
+          display: none;
+        }
+      }
+      .review-mobile {
+        display: none;
+        gap: 0.5em;
+        cursor: pointer;
+        @include respond(mini-tablet) {
+          display: flex;
+          font-size: 14px;
+        }
       }
     }
     .desc-description {
@@ -453,14 +659,29 @@ a {
       .add-info {
         display: flex;
         justify-content: space-between;
+        @include respond(mini-tablet) {
+          flex-direction: column;
+          gap: 2em;
+        }
         .add-info-details {
           width: 50%;
           display: flex;
           flex-direction: column;
           gap: 1.75em;
+          @include respond(mini-tablet) {
+            width: 100%;
+          }
           .middle {
             padding-left: 1em;
             border-left: 3px solid $background-secondary;
+          }
+        }
+        .add-info-image {
+          @include respond(mini-tablet) {
+            width: 100%;
+            img {
+              width: 100%;
+            }
           }
         }
       }
@@ -468,6 +689,9 @@ a {
   }
   .other-products {
     padding: 3em 10em;
+    @include respond(mini-tablet) {
+      padding: 1.5em 2.5em;
+    }
     background-color: $background-footer;
     a {
       color: inherit;
@@ -492,13 +716,24 @@ a {
   .brands {
     padding: 4em 10em;
     background-color: $background-footer;
+    @include respond(mini-tablet) {
+      padding: 3em 2.5em;
+    }
     .brand {
       display: flex;
       justify-content: space-between;
+      @include respond(mini-tablet) {
+        flex-direction: column;
+        align-items: center;
+        gap: 3em;
+      }
     }
   }
   .footer-pad {
     padding-bottom: 33em;
+    @include respond(mini-tablet) {
+      padding-bottom: 80.5em;
+    }
   }
 }
 
@@ -512,6 +747,14 @@ a {
     background-color: $background-footer;
     @include flex_center();
     padding: 0 10em;
+    @include respond(mini-tablet) {
+      padding: 3.5em;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2em;
+      height: 10em;
+    }
     .footer-socials {
       display: flex;
       gap: 1em;
@@ -529,6 +772,13 @@ a {
     display: flex;
     justify-content: space-between;
     margin-top: 3em;
+    @include respond(mini-tablet) {
+      height: 100%;
+      flex-direction: column;
+      padding: 0 3.5em;
+      gap: 2em;
+      margin-bottom: 2em;
+    }
     a {
       color: inherit;
       text-decoration: none;
@@ -542,6 +792,9 @@ a {
         border: 1px solid $color-border;
         border-radius: 5px;
         overflow: hidden;
+        @include respond(mini-tablet) {
+          width: 100%;
+        }
         .inputs {
           height: 100%;
           background-color: $background-input;
@@ -569,5 +822,11 @@ a {
     padding: 0 10em;
     display: flex;
     align-items: center;
+    @include respond(mini-tablet) {
+      height: 6em;
+      justify-content: center;
+      text-align: center;
+      padding: 0 3.5em;
+    }
   }
 }

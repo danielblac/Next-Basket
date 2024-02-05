@@ -1,21 +1,13 @@
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import Stack from "@mui/material/Stack";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useRouter } from "next/router";
 import { ProductsTypes } from "@/types/UserInterface";
 import { Carousel } from "react-bootstrap";
 import Image from "next/image";
-import { Key, useEffect, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-} from "@mui/material";
+import { Key, useState } from "react";
+import { Button, Card, CardContent, CardMedia, Grid } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -27,10 +19,7 @@ export default function Products({ product, products }: any) {
     description,
     price,
     discountPercentage,
-    rating,
     stock,
-    brand,
-    category,
     thumbnail,
     images,
   } = product;
@@ -63,7 +52,12 @@ export default function Products({ product, products }: any) {
       </div>
       <section className="products-header">
         <div className="products-photo">
-          <Carousel bsPrefix="carousel" slide={true} interval={1500} className="carousel">
+          <Carousel
+            bsPrefix="carousel"
+            slide={true}
+            interval={1500}
+            className="carousel"
+          >
             {images.slice(0, 3).map((image: any) => (
               <Carousel.Item className="carousel-container" key={id}>
                 <Image
@@ -81,7 +75,6 @@ export default function Products({ product, products }: any) {
               .slice(0, 3)
               .map((image: any, index: Key | null | undefined) => (
                 <Image
-                  className="carousel-image"
                   src={image}
                   alt="product"
                   width={100}
@@ -206,6 +199,14 @@ export default function Products({ product, products }: any) {
           </div>
           <div
             onClick={() => {
+              setDesc(true), setAddInfo(false), setReview(false);
+            }}
+            className="desc-link-mobile"
+          >
+            <p style={desc ? { color: "#23a6f0" } : {}}>Description</p>
+          </div>
+          <div
+            onClick={() => {
               setDesc(false), setAddInfo(true), setReview(false);
             }}
             className="desc-link"
@@ -222,9 +223,19 @@ export default function Products({ product, products }: any) {
           </div>
           <div
             onClick={() => {
+              setDesc(false), setAddInfo(true), setReview(false);
+            }}
+            className="desc-link-mobile"
+          >
+            <p style={addInfo ? { color: "#23a6f0" } : {}}>
+              Additional Information
+            </p>
+          </div>
+          <div
+            onClick={() => {
               setDesc(false), setAddInfo(false), setReview(true);
             }}
-            className="review desc-link"
+            className="review"
           >
             <Typography
               variant="body2"
@@ -244,6 +255,15 @@ export default function Products({ product, products }: any) {
             >
               (0)
             </Typography>
+          </div>
+          <div
+            onClick={() => {
+              setDesc(false), setAddInfo(false), setReview(true);
+            }}
+            className="review-mobile"
+          >
+            <p style={review ? { color: "#23a6f0" } : {}}>Review</p>
+            <p style={{ color: "#23856D" }}>(0)</p>
           </div>
         </div>
         <div className="desc-description">
@@ -300,7 +320,7 @@ export default function Products({ product, products }: any) {
                   Excitation venial consequent sent nostrum met.
                 </Typography>
               </div>
-              <div>
+              <div className="add-info-image">
                 <Image
                   className="add-info-image"
                   src={thumbnail}
@@ -336,7 +356,7 @@ export default function Products({ product, products }: any) {
           BESTSELLER PRODUCTS
         </Typography>
 
-        <Grid container spacing={2} rowSpacing={3}>
+        <Grid container spacing={3} rowSpacing={3}>
           {products
             .filter((product: any) => product.id != id)
             .sort(() => 0.5 - Math.random())
@@ -351,7 +371,7 @@ export default function Products({ product, products }: any) {
                 discountPercentage,
               }: ProductsTypes) => (
                 <Grid item key={id} xs={12} md={3}>
-                  <Card sx={{ maxWidth: 240, height: "max-content" }}>
+                  <Card>
                     <Link href={`/products/${id}`}>
                       <CardMedia
                         component="img"

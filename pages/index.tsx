@@ -61,6 +61,14 @@ export default function Home({ products }: any) {
                 alt="plates"
                 width={452}
                 height={616}
+                className="plates-d"
+              />
+              <Image
+                src="/img/plates-m.png"
+                alt="plates"
+                width={332}
+                height={300}
+                className="plates-m"
               />
             </div>
             <div className="vase-cups">
@@ -70,6 +78,14 @@ export default function Home({ products }: any) {
                   alt="vase"
                   width={690}
                   height={300}
+                  className="vase-d"
+                />
+                <Image
+                  src="/img/vase-m.png"
+                  alt="vase"
+                  width={690}
+                  height={300}
+                  className="vase-m"
                 />
               </div>
               <div className="light-cup">
@@ -112,7 +128,7 @@ export default function Home({ products }: any) {
             </Typography>
           </div>
 
-          <Grid container spacing={2} rowSpacing={3}>
+          <Grid container spacing={3} rowSpacing={3}>
             {products
               .slice(0, 12)
               .map(
@@ -125,7 +141,7 @@ export default function Home({ products }: any) {
                   discountPercentage,
                 }: ProductsTypes) => (
                   <Grid item key={id} xs={12} md={2}>
-                    <Card sx={{ maxWidth: 183, height: "max-content" }}>
+                    <Card>
                       <Link href={`/products/${id}`}>
                         <CardMedia
                           component="img"
@@ -192,7 +208,7 @@ export default function Home({ products }: any) {
               )}
           </Grid>
           {viewMoreProducts ? (
-            <Grid container spacing={2} rowSpacing={3} marginTop={1}>
+            <Grid container spacing={3} rowSpacing={3} marginTop={1}>
               {products
                 .slice(12, 30)
                 .map(
@@ -205,7 +221,7 @@ export default function Home({ products }: any) {
                     discountPercentage,
                   }: ProductsTypes) => (
                     <Grid item key={id} xs={12} md={2}>
-                      <Card sx={{ maxWidth: 183 }}>
+                      <Card>
                         <Link href={`/products/${id}`}>
                           <CardMedia
                             component="img"
@@ -403,10 +419,10 @@ export default function Home({ products }: any) {
               fontWeight="700"
               fontFamily="Montserrat"
             >
-              Featured Posts
+              Featured Products
             </Typography>
           </div>
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
               <Card sx={{ maxWidth: 345 }}>
                 <CardMedia

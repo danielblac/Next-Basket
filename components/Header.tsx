@@ -9,13 +9,21 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import SegmentRoundedIcon from "@mui/icons-material/SegmentRounded";
+import CloseIcon from "@mui/icons-material/Close";
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import NavLink from "./NavLink";
+import { useState } from "react";
 
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <header className="header">
+    <header
+      className="header"
+      style={menuOpen ? { paddingBottom: "45em" } : {}}
+    >
       <div className="socials">
         <div className="social-contact">
           <div className="social-phone">
@@ -183,6 +191,98 @@ export default function Header() {
             </Typography>
           </div>
         </div>
+      </div>
+      <div className="nav-mobile">
+        <div>
+          <Typography
+            fontFamily="Montserrat"
+            color="#252B42"
+            variant="h4"
+            fontWeight="700"
+          >
+            Bandage
+          </Typography>
+        </div>
+        <div className="bar">
+          {menuOpen ? (
+            <div onClick={() => setMenuOpen(false)}>
+              <CloseIcon fontSize="large" />
+            </div>
+          ) : (
+            <div onClick={() => setMenuOpen(true)}>
+              <SegmentRoundedIcon fontSize="large" />
+            </div>
+          )}
+        </div>
+        {menuOpen && (
+          <nav>
+            <NavLink href="/">
+              <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
+                Home
+              </Typography>
+            </NavLink>
+            <NavLink href="#">
+              <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
+                Shop
+              </Typography>
+            </NavLink>
+            <NavLink href="#">
+              <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
+                About
+              </Typography>
+            </NavLink>
+            <NavLink href="#">
+              <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
+                Blog
+              </Typography>
+            </NavLink>
+            <NavLink href="#">
+              <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
+                Contact
+              </Typography>
+            </NavLink>
+            <NavLink href="#">
+              <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
+                Pages
+              </Typography>
+            </NavLink>
+            <div className="user">
+              <div className="user-login">
+                <PersonOutlineIcon fontSize="large" />
+                <Typography
+                  fontFamily="Montserrat"
+                  variant="body1"
+                  fontSize={30}
+                >
+                  Login / Register
+                </Typography>
+              </div>
+              <div className="search-icon">
+                <SearchOutlinedIcon fontSize="large" />
+              </div>
+              <div className="cart">
+                <ShoppingCartOutlinedIcon fontSize="large" />
+                <Typography
+                  fontFamily="Montserrat"
+                  variant="body1"
+                  fontSize={30}
+                >
+                  1
+                </Typography>
+              </div>
+              <div className="wishlist">
+                <FavoriteBorderOutlinedIcon fontSize="large" />
+                <Typography
+                  fontFamily="Montserrat"
+                  variant="body1"
+                  fontSize={30}
+                >
+                  1
+                </Typography>
+              </div>
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   );
