@@ -15,11 +15,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { Avatar, Typography } from "@mui/material";
 import Link from "next/link";
 import NavLink from "./NavLink";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "@/store/store";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 interface IProps {
   openSearchModal: () => void;
@@ -28,33 +28,17 @@ interface IProps {
   openLoginModal: () => void;
 }
 
-interface ImageProps {
-  src: string | StaticImageData;
-  alt: string;
-  width: number;
-  height: number;
-}
-
 export default function Header(props: IProps) {
+  // DECLARATIONS
   const router = useRouter();
   const { data: session } = useSession();
-  const [menuOpen, setMenuOpen] = useState(false);
-
+  const profile = session?.user?.image;  
   const cart = useAppSelector((state) => state.cart.cart);
   const wishlist = useAppSelector((state) => state.wishlist.wishList);
-
-  /*  function getProfileImage() {
-    if (session?.user) {
-      return session?.user?.image;
-    } else {
-      return session?.image;
-    }
-  } */
-
-  const profile = session?.user?.image;
-  const ProfilePicture = ({ src, alt, width, height }: ImageProps) => {
-    return <Image src={src} alt={alt} width={width} height={height} />;
-  };
+  
+  // STATES
+  const [menuOpen, setMenuOpen] = useState(false);
+  
 
   return (
     <header
@@ -204,13 +188,13 @@ export default function Header(props: IProps) {
         <div className="user">
           {session ? (
             <div className="user-login" onClick={() => signOut()}>
-              <Image
+              {/* <Image
                 src={profile ? profile : "/img/user-one.jpg"}
                 alt=""
                 width={30}
                 height={30}
-              />
-              {/* <Avatar src={session.user?.image} /> */}
+              /> */}
+              <Avatar src={profile ? profile : "/img/user-one.jpg"} />
               <Typography
                 fontFamily="Montserrat"
                 variant="subtitle2"

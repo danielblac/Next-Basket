@@ -29,6 +29,7 @@ interface State extends SnackbarOrigin {
 }
 
 export default function Products({ product, products }: any) {
+  // DECLARATIONS
   const {
     id,
     title,
@@ -39,9 +40,6 @@ export default function Products({ product, products }: any) {
     thumbnail,
     images,
   } = product;
-  console.log(product);
-  const { data: session } = useSession();
-  console.log(session)
   const router = useRouter();
   const dispatch = useAppDispatch();
   const breadcrumbs = [
@@ -59,7 +57,7 @@ export default function Products({ product, products }: any) {
   const [addInfo, setAddInfo] = useState(true);
   const [review, setReview] = useState(false);
 
-  // POPOVER
+  // POPOVER / FUNCTIONS
   const [anchorCart, setAnchorCart] = useState<HTMLElement | null>(null);
 
   const handleCartPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {

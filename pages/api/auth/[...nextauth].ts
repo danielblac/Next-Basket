@@ -27,7 +27,6 @@ export const authOptions = {
           body: JSON.stringify(credentials),
         });
         const user = await res.json();
-        console.log(user);
         if (!user.token) {
           throw new Error(user.message);
         }
@@ -69,7 +68,6 @@ export const authOptions = {
       return session;
     },
   },
-  //   debug: process.nextTick.NODE_ENV === "development",
   secret: process.env.NEXTAUTH_SECRET,
 };
 

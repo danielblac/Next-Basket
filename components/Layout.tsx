@@ -9,7 +9,7 @@ import {
 } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import {
   Card,
   CardContent,
@@ -39,14 +39,14 @@ import Providers from "./Providers";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { signIn } from "next-auth/react";
 
-interface IProps {
-  myVar: boolean;
-  setMyVar?: Dispatch<SetStateAction<boolean>>;
-}
-
 type LayoutProps = { children?: ReactNode };
 
 export default function Layout({ children }: LayoutProps) {
+  // DECLARATIONS
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.cart.cart);
+  const wishlist = useAppSelector((state) => state.wishlist.wishList);
+
   // STATES
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
@@ -56,6 +56,7 @@ export default function Layout({ children }: LayoutProps) {
   const [openWish, setOpenWish] = useState(false);
   const [login, setLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ export default function Layout({ children }: LayoutProps) {
     password: "",
   });
 
+  // FUNCTIONS
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -104,48 +106,6 @@ export default function Layout({ children }: LayoutProps) {
     setLogin(false);
   };
 
-  async function getProducts() {
-    try {
-      const productsResponse = await fetch("https://dummyjson.com/products");
-      const products = await productsResponse.json();
-
-      if (products) {
-        setProducts(products.products);
-      }
-      // Use the data as needed
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  useEffect(() => {
-    if (products.length >= 0) {
-      const filtered = products.filter((product: any) => {
-        const productInfo = `${product.title}, ${product.brand}, ${product.category}`;
-        return productInfo.toLowerCase().includes(search.toLowerCase());
-      });
-      setFilteredProducts(filtered);
-    }
-  }, [search, products]);
-
-  const dispatch = useAppDispatch();
-  const cart = useAppSelector((state) => state.cart.cart);
-  const wishlist = useAppSelector((state) => state.wishlist.wishList);
-
-  useEffect(() => {
-    if (cart >= 0) {
-      const updatedCart = cart.map((item: any) => ({
-        ...item,
-        count: item.count || 1,
-      }));
-      dispatch(setCart(updatedCart));
-    }
-  }, []);
-
   const increaseCount = (id: number) => {
     const updatedCart = cart.map((item: any) =>
       item.id === id ? { ...item, count: (item.count || 1) + 1 } : item
@@ -183,6 +143,21 @@ export default function Layout({ children }: LayoutProps) {
     );
   };
 
+  // ASYNC FUNCTIONS
+  async function getProducts() {
+    try {
+      const productsResponse = await fetch("https://dummyjson.com/products");
+      const products = await productsResponse.json();
+
+      if (products) {
+        setProducts(products.products);
+      }
+      // Use the data as needed
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // SIGN IN
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -205,7 +180,6 @@ export default function Layout({ children }: LayoutProps) {
           ...formData,
           redirect: false,
         });
-        console.log(response);
         if (response?.error === "Invalid credentials") {
           setLoading(false);
           setError("credentials does not match");
@@ -220,16 +194,56 @@ export default function Layout({ children }: LayoutProps) {
     }
   }
 
+  // USE EFFECT
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    if (products.length >= 0) {
+      const filtered = products.filter((product: any) => {
+        const productInfo = `${product.title}, ${product.brand}, ${product.category}`;
+        return productInfo.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilteredProducts(filtered);
+    }
+  }, [search, products]);
+
+  useEffect(() => {
+    if (cart >= 0) {
+      const updatedCart = cart.map((item: any) => ({
+        ...item,
+        count: item.count || 1,
+      }));
+      dispatch(setCart(updatedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 10000);
+  }, [error]);
+
   return (
     <div className="layout">
+      {/* header */}
       <Header
         openSearchModal={openSearchModal}
         openCartModal={openCartModal}
         openWishModal={openWishModal}
         openLoginModal={openLoginModal}
       />
+
+      {/* children */}
       <div className="admin-dashboard">{children}</div>
+
+      {/* footer */}
       <Footer />
+
+      {/* MODALS */}
+
+      {/* search modal */}
       <div className="search-modal">
         <Modal show={open} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -366,6 +380,8 @@ export default function Layout({ children }: LayoutProps) {
           </Modal.Body>
         </Modal>
       </div>
+
+      {/* cart modal */}
       <div className="cart-modal">
         <Modal show={openCart} onHide={handleCartClose}>
           <Modal.Header closeButton>
@@ -510,6 +526,8 @@ export default function Layout({ children }: LayoutProps) {
           </Modal.Body>
         </Modal>
       </div>
+
+      {/* wishlist modal */}
       <div className="wishlist-modal">
         <Modal show={openWish} onHide={handleWishClose}>
           <Modal.Header closeButton>
@@ -580,6 +598,8 @@ export default function Layout({ children }: LayoutProps) {
           </Modal.Body>
         </Modal>
       </div>
+
+      {/* login modal */}
       <div className="login-modal">
         <Modal show={login} onHide={handleLoginClose}>
           <Modal.Header closeButton>
@@ -634,6 +654,7 @@ export default function Layout({ children }: LayoutProps) {
                     }
                     label="Password"
                     value={formData.password}
+                    error={passwordError}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
@@ -675,6 +696,19 @@ export default function Layout({ children }: LayoutProps) {
                 >
                   <span>Login</span>
                 </LoadingButton>
+                {error && (
+                  <Typography
+                    align="center"
+                    variant="body2"
+                    color="error"
+                    fontWeight="700"
+                    fontFamily="Montserrat"
+                    fontSize={10}
+                    marginTop="5px"
+                  >
+                    {error}
+                  </Typography>
+                )}
                 <div
                   style={{
                     display: "flex",

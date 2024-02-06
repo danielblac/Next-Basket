@@ -125,21 +125,15 @@ a {
       text-decoration: underline;
     }
   }
-}
-
-// LAYOUT
-
-/* .layout {
-  .cart-modal {
-    .cart-cont {
-      .cart-mate {
-        background-color: red;
-        padding: 1em;
-      }
+  .footer-pad {
+    padding-bottom: 33em;
+    @include respond(mini-tablet) {
+      padding-bottom: 80.5em;
     }
   }
-} */
+}
 
+// HEADER
 .header {
   .socials {
     background-color: $background-secondary;

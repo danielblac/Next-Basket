@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Link from "next/link";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
@@ -293,14 +293,24 @@ export default function Footer() {
                 </Typography>
               </button>
             </div>
-            <Typography fontFamily="Montserrat" variant="body2" fontSize={12} marginTop="0.5em">
+            <Typography
+              fontFamily="Montserrat"
+              variant="body2"
+              fontSize={12}
+              marginTop="0.5em"
+            >
               Lore imp sum dolor Amit
             </Typography>
           </div>
         </div>
       </div>
       <div className="rights-reserved">
-        <Typography fontFamily="Montserrat" variant="body2" fontSize={14} fontWeight={700}>
+        <Typography
+          fontFamily="Montserrat"
+          variant="body2"
+          fontSize={14}
+          fontWeight={700}
+        >
           Made With Love By DanielBlac All Right Reserved
         </Typography>
       </div>
