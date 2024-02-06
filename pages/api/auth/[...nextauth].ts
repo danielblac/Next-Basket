@@ -3,16 +3,14 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { JWT } from "next-auth/jwt";
 
-import NextAuth, { DefaultSession, User } from "next-auth"
+import NextAuth, { DefaultSession, User } from "next-auth";
 
-
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      address: string
-    } & DefaultSession["user"]
-  }
-
+interface Session {
+  user: {
+    /** The user's postal address. */
+    address: string;
+  } & DefaultSession["user"];
+}
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -59,26 +57,6 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  /* pages: {
-    signIn: "/",
-  },
-  session: {
-    jwt: true,
-    maxAge: 30 * 24 * 60 * 60,
-  },
-  callbacks: {
-    async jwt({ token, user }: { token: JWT; user: User }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
-    async session({ session, token }: { session: Session; token: JWT }) {
-      session.user = token.user;
-      return session;
-    },
-  },
-    debug: process.nextTick.NODE_ENV === "development", */
   secret: process.env.NEXTAUTH_SECRET,
 };
 
