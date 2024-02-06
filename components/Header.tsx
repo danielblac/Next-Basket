@@ -11,18 +11,55 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SegmentRoundedIcon from "@mui/icons-material/SegmentRounded";
 import CloseIcon from "@mui/icons-material/Close";
-import { Typography } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { Avatar, Typography } from "@mui/material";
 import Link from "next/link";
 import NavLink from "./NavLink";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { useAppSelector } from "@/store/store";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
+import Image, { StaticImageData } from "next/image";
 
-export default function Header() {
+interface IProps {
+  openSearchModal: () => void;
+  openCartModal: () => void;
+  openWishModal: () => void;
+  openLoginModal: () => void;
+}
+
+interface ImageProps {
+  src: string | StaticImageData;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+export default function Header(props: IProps) {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const cart = useAppSelector((state) => state.cart.cart);
+  const wishlist = useAppSelector((state) => state.wishlist.wishList);
+
+  /*  function getProfileImage() {
+    if (session?.user) {
+      return session?.user?.image;
+    } else {
+      return session?.image;
+    }
+  } */
+
+  const profile = session?.user?.image;
+  const ProfilePicture = ({ src, alt, width, height }: ImageProps) => {
+    return <Image src={src} alt={alt} width={width} height={height} />;
+  };
 
   return (
     <header
       className="header"
-      style={menuOpen ? { paddingBottom: "45em" } : {}}
+      style={menuOpen ? { paddingBottom: "42em" } : {}}
     >
       <div className="socials">
         <div className="social-contact">
@@ -165,29 +202,59 @@ export default function Header() {
           </nav>
         </div>
         <div className="user">
-          <div className="user-login">
-            <PersonOutlineIcon fontSize="small" />
-            <Typography
-              fontFamily="Montserrat"
-              variant="subtitle2"
-              fontWeight="700"
-            >
-              Login / Register
-            </Typography>
-          </div>
-          <div className="search-icon">
+          {session ? (
+            <div className="user-login" onClick={() => signOut()}>
+              <Image
+                src={profile ? profile : "/img/user-one.jpg"}
+                alt=""
+                width={30}
+                height={30}
+              />
+              {/* <Avatar src={session.user?.image} /> */}
+              <Typography
+                fontFamily="Montserrat"
+                variant="subtitle2"
+                fontWeight="700"
+              >
+                SignOut
+              </Typography>
+            </div>
+          ) : (
+            <div className="user-login" onClick={() => props.openLoginModal()}>
+              <PersonOutlineIcon fontSize="small" />
+              <Typography
+                fontFamily="Montserrat"
+                variant="subtitle2"
+                fontWeight="700"
+              >
+                Login / Register
+              </Typography>
+            </div>
+          )}
+
+          <div className="search-icon" onClick={() => props.openSearchModal()}>
             <SearchOutlinedIcon />
           </div>
-          <div className="cart">
+          <div className="cart" onClick={() => props.openCartModal()}>
             <ShoppingCartOutlinedIcon fontSize="small" />
             <Typography fontFamily="Montserrat" variant="subtitle2">
-              1
+              {
+                cart.filter(
+                  ({ id }: any, index: any) =>
+                    !cart.map(({ id }: any) => id).includes(id, index + 1)
+                ).length
+              }
             </Typography>
           </div>
-          <div className="wishlist">
+          <div className="wishlist" onClick={() => props.openWishModal()}>
             <FavoriteBorderOutlinedIcon fontSize="small" />
             <Typography fontFamily="Montserrat" variant="subtitle2">
-              1
+              {
+                wishlist.filter(
+                  ({ id }: any, index: any) =>
+                    !wishlist.map(({ id }: any) => id).includes(id, index + 1)
+                ).length
+              }
             </Typography>
           </div>
         </div>
@@ -204,6 +271,11 @@ export default function Header() {
           </Typography>
         </div>
         <div className="bar">
+          {session && (
+            <div>
+              <Avatar src={profile ? profile : "/img/user-one.jpg"} />
+            </div>
+          )}
           {menuOpen ? (
             <div onClick={() => setMenuOpen(false)}>
               <CloseIcon fontSize="large" />
@@ -216,68 +288,123 @@ export default function Header() {
         </div>
         {menuOpen && (
           <nav>
-            <NavLink href="/">
+            <div
+              onClick={() => {
+                router.push("/");
+                setMenuOpen(false);
+              }}
+            >
               <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
                 Home
               </Typography>
-            </NavLink>
-            <NavLink href="#">
+            </div>
+            <div onClick={() => setMenuOpen(false)}>
               <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
                 Shop
               </Typography>
-            </NavLink>
-            <NavLink href="#">
+            </div>
+            <div onClick={() => setMenuOpen(false)}>
               <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
                 About
               </Typography>
-            </NavLink>
-            <NavLink href="#">
+            </div>
+            <div onClick={() => setMenuOpen(false)}>
               <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
                 Blog
               </Typography>
-            </NavLink>
-            <NavLink href="#">
+            </div>
+            <div onClick={() => setMenuOpen(false)}>
               <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
                 Contact
               </Typography>
-            </NavLink>
-            <NavLink href="#">
+            </div>
+            <div onClick={() => setMenuOpen(false)}>
               <Typography fontFamily="Montserrat" variant="body1" fontSize={30}>
                 Pages
               </Typography>
-            </NavLink>
+            </div>
             <div className="user">
-              <div className="user-login">
-                <PersonOutlineIcon fontSize="large" />
-                <Typography
-                  fontFamily="Montserrat"
-                  variant="body1"
-                  fontSize={30}
+              {session ? (
+                <div className="user-login">
+                  <Typography
+                    fontFamily="Montserrat"
+                    variant="body1"
+                    fontSize={30}
+                  >
+                    SignOut
+                  </Typography>
+                  <LogoutIcon fontSize="medium" />
+                </div>
+              ) : (
+                <div
+                  className="user-login"
+                  onClick={() => {
+                    props.openLoginModal();
+                    setMenuOpen(false);
+                  }}
                 >
-                  Login / Register
-                </Typography>
-              </div>
+                  <PersonOutlineIcon fontSize="large" />
+                  <Typography
+                    fontFamily="Montserrat"
+                    variant="body1"
+                    fontSize={30}
+                  >
+                    Login / Register
+                  </Typography>
+                </div>
+              )}
+
               <div className="search-icon">
-                <SearchOutlinedIcon fontSize="large" />
+                <SearchOutlinedIcon
+                  fontSize="large"
+                  onClick={() => {
+                    props.openSearchModal();
+                    setMenuOpen(false);
+                  }}
+                />
               </div>
-              <div className="cart">
+              <div
+                className="cart"
+                onClick={() => {
+                  props.openCartModal();
+                  setMenuOpen(false);
+                }}
+              >
                 <ShoppingCartOutlinedIcon fontSize="large" />
                 <Typography
                   fontFamily="Montserrat"
                   variant="body1"
-                  fontSize={30}
+                  fontSize={25}
                 >
-                  1
+                  {
+                    cart.filter(
+                      ({ id }: any, index: any) =>
+                        !cart.map(({ id }: any) => id).includes(id, index + 1)
+                    ).length
+                  }
                 </Typography>
               </div>
-              <div className="wishlist">
+              <div
+                className="wishlist"
+                onClick={() => {
+                  props.openWishModal();
+                  setMenuOpen(false);
+                }}
+              >
                 <FavoriteBorderOutlinedIcon fontSize="large" />
                 <Typography
                   fontFamily="Montserrat"
                   variant="body1"
-                  fontSize={30}
+                  fontSize={25}
                 >
-                  1
+                  {
+                    wishlist.filter(
+                      ({ id }: any, index: any) =>
+                        !wishlist
+                          .map(({ id }: any) => id)
+                          .includes(id, index + 1)
+                    ).length
+                  }
                 </Typography>
               </div>
             </div>

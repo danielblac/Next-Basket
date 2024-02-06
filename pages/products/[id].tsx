@@ -7,10 +7,26 @@ import { ProductsTypes } from "@/types/UserInterface";
 import { Carousel } from "react-bootstrap";
 import Image from "next/image";
 import { Key, useState } from "react";
-import { Button, Card, CardContent, CardMedia, Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Popover,
+} from "@mui/material";
+import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import { useAppDispatch } from "@/store/store";
+import { addToCart } from "@/store/features/cartSlice";
+import { addToWish } from "@/store/features/wishlistSlice";
+import { useSession } from "next-auth/react";
+
+interface State extends SnackbarOrigin {
+  open: boolean;
+}
 
 export default function Products({ product, products }: any) {
   const {
@@ -24,7 +40,10 @@ export default function Products({ product, products }: any) {
     images,
   } = product;
   console.log(product);
+  const { data: session } = useSession();
+  console.log(session)
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const breadcrumbs = [
     <Link key="1" color="inherit" href="/" onClick={() => router.push("/")}>
       Home
@@ -39,6 +58,43 @@ export default function Products({ product, products }: any) {
   const [desc, setDesc] = useState(false);
   const [addInfo, setAddInfo] = useState(true);
   const [review, setReview] = useState(false);
+
+  // POPOVER
+  const [anchorCart, setAnchorCart] = useState<HTMLElement | null>(null);
+
+  const handleCartPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorCart(event.currentTarget);
+  };
+
+  const handleCartPopoverClose = () => {
+    setAnchorCart(null);
+  };
+
+  const openCart = Boolean(anchorCart);
+
+  const [anchorWish, setAnchorWish] = useState<HTMLElement | null>(null);
+
+  const handleWishPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorWish(event.currentTarget);
+  };
+
+  const handleWishPopoverClose = () => {
+    setAnchorWish(null);
+  };
+
+  const openWish = Boolean(anchorWish);
+
+  //SNACKBAR
+  const [snackbar, setSnackbar] = useState<State>({
+    open: false,
+    vertical: "bottom",
+    horizontal: "right",
+  });
+  const { vertical, horizontal, open } = snackbar;
+
+  const handleSnackbarClose = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   return (
     <div className="products-details-page">
@@ -167,15 +223,82 @@ export default function Products({ product, products }: any) {
             >
               Select options
             </Button>
-            <div className="icon-avatar">
+            <div
+              className="icon-avatar"
+              aria-owns={openWish ? "mouse-over-popover" : undefined}
+              aria-haspopup="true"
+              onMouseEnter={handleWishPopoverOpen}
+              onMouseLeave={handleWishPopoverClose}
+              onClick={() => {
+                dispatch(addToWish(product));
+                setSnackbar({ ...snackbar, open: true });
+              }}
+            >
               <FavoriteBorderOutlinedIcon fontSize="small" />
             </div>
-            <div className="icon-avatar">
+            <Popover
+              id="mouse-over-popover"
+              sx={{
+                pointerEvents: "none",
+              }}
+              open={openCart}
+              anchorEl={anchorCart}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              onClose={handleCartPopoverClose}
+              disableRestoreFocus
+            >
+              <Typography sx={{ p: 1 }}>Add to Cart</Typography>
+            </Popover>
+            <div
+              className="icon-avatar"
+              aria-owns={openCart ? "mouse-over-popover" : undefined}
+              aria-haspopup="true"
+              onMouseEnter={handleCartPopoverOpen}
+              onMouseLeave={handleCartPopoverClose}
+              onClick={() => {
+                dispatch(addToCart(product));
+                setSnackbar({ ...snackbar, open: true });
+              }}
+            >
               <ShoppingCartOutlinedIcon fontSize="small" />
             </div>
+            <Popover
+              id="mouse-over-popover"
+              sx={{
+                pointerEvents: "none",
+              }}
+              open={openWish}
+              anchorEl={anchorWish}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              onClose={handleWishPopoverClose}
+              disableRestoreFocus
+            >
+              <Typography sx={{ p: 1 }}>Add to Wishlist</Typography>
+            </Popover>
             <div className="icon-avatar">
               <VisibilityOutlinedIcon fontSize="small" />
             </div>
+            <Snackbar
+              anchorOrigin={{ vertical, horizontal }}
+              open={open}
+              onClose={handleSnackbarClose}
+              message="Added Successfully"
+              key={vertical + horizontal}
+            />
           </div>
         </div>
       </section>
