@@ -4,6 +4,19 @@ import GitHubProvider from "next-auth/providers/github";
 import NextAuth, { User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
+declare var process: {
+  nextTick: any;
+  env: {
+    NODE_ENV: string;
+    NEXTAUTH_SECRET: string;
+    GOOGLE_CLIENT_ID: string;
+    GOOGLE_CLIENT_SECRET: string;
+    GITHUB_ID: string;
+    GITHUB_SECRET: string;
+    nextTick: any;
+  };
+};
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -68,6 +81,7 @@ export const authOptions = {
       return session;
     },
   },
+  debug: (process.nextTick.NODE_ENV as string) === "development",
   secret: process.env.NEXTAUTH_SECRET,
 };
 
