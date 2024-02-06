@@ -1,21 +1,18 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import NextAuth, { User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
-declare var process: {
-  nextTick: any;
-  env: {
-    NODE_ENV: string;
-    NEXTAUTH_SECRET: string;
-    GOOGLE_CLIENT_ID: string;
-    GOOGLE_CLIENT_SECRET: string;
-    GITHUB_ID: string;
-    GITHUB_SECRET: string;
-    nextTick: any;
-  };
-};
+import NextAuth, { DefaultSession, User } from "next-auth"
+
+
+  interface Session {
+    user: {
+      /** The user's postal address. */
+      address: string
+    } & DefaultSession["user"]
+  }
+
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -62,7 +59,7 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  pages: {
+  /* pages: {
     signIn: "/",
   },
   session: {
@@ -76,12 +73,12 @@ export const authOptions = {
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       session.user = token.user;
       return session;
     },
   },
-  debug: (process.nextTick.NODE_ENV as string) === "development",
+    debug: process.nextTick.NODE_ENV === "development", */
   secret: process.env.NEXTAUTH_SECRET,
 };
 
