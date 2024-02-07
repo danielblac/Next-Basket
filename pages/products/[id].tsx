@@ -52,7 +52,6 @@ export default function Products({ product, products }: any) {
   ];
 
   // STATES
-
   const [desc, setDesc] = useState(false);
   const [addInfo, setAddInfo] = useState(true);
   const [review, setReview] = useState(false);
@@ -446,8 +445,8 @@ export default function Products({ product, products }: any) {
                   className="add-info-image"
                   src={thumbnail}
                   alt="product"
-                  width={400}
-                  height={370}
+                  width={350}
+                  height={350}
                 />
               </div>
             </div>
@@ -491,7 +490,7 @@ export default function Products({ product, products }: any) {
                 category,
                 discountPercentage,
               }: ProductsTypes) => (
-                <Grid item key={id} xs={12} md={3}>
+                <Grid item key={id} xs={12} sm={6} md={3}>
                   <Card>
                     <Link href={`/products/${id}`}>
                       <CardMedia

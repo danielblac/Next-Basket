@@ -140,7 +140,7 @@ export default function Home({ products }: any) {
                   category,
                   discountPercentage,
                 }: ProductsTypes) => (
-                  <Grid item key={id} xs={12} md={2}>
+                  <Grid item key={id} xs={12} sm={6} md={3} lg={2}>
                     <Card>
                       <Link href={`/products/${id}`}>
                         <CardMedia
@@ -220,7 +220,7 @@ export default function Home({ products }: any) {
                     category,
                     discountPercentage,
                   }: ProductsTypes) => (
-                    <Grid item key={id} xs={12} md={2}>
+                    <Grid item key={id} xs={12} sm={6} md={3} lg={2}>
                       <Card>
                         <Link href={`/products/${id}`}>
                           <CardMedia
@@ -320,7 +320,7 @@ export default function Home({ products }: any) {
           </div>
 
           <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
               <div className="service-card">
                 <Image
                   src="/img/book-reader.png"
@@ -346,7 +346,7 @@ export default function Home({ products }: any) {
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
               <div className="service-card">
                 <Image
                   src="/img/carbon-book.png"
@@ -373,7 +373,7 @@ export default function Home({ products }: any) {
                 </Typography>
               </div>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
               <div className="service-card">
                 <Image
                   src="/img/growth-curve.png"
@@ -423,8 +423,8 @@ export default function Home({ products }: any) {
             </Typography>
           </div>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 345 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card>
                 <CardMedia
                   component="img"
                   alt="posts"
@@ -513,8 +513,8 @@ export default function Home({ products }: any) {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 345 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card>
                 <CardMedia
                   component="img"
                   alt="posts"
@@ -603,8 +603,8 @@ export default function Home({ products }: any) {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Card sx={{ maxWidth: 345 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card>
                 <CardMedia
                   component="img"
                   alt="posts"
@@ -739,6 +739,7 @@ export default function Home({ products }: any) {
                           align="center"
                           variant="body2"
                           fontFamily="Montserrat"
+                          minHeight="4.5em"
                         >
                           {testimony.testimony}
                         </Typography>

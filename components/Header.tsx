@@ -32,13 +32,12 @@ export default function Header(props: IProps) {
   // DECLARATIONS
   const router = useRouter();
   const { data: session } = useSession();
-  const profile = session?.user?.image;  
+  const profile = session?.user?.image;
   const cart = useAppSelector((state) => state.cart.cart);
   const wishlist = useAppSelector((state) => state.wishlist.wishList);
-  
+
   // STATES
   const [menuOpen, setMenuOpen] = useState(false);
-  
 
   return (
     <header
@@ -68,7 +67,7 @@ export default function Header(props: IProps) {
             </Typography>
           </div>
         </div>
-        <div>
+        <div className="follow">
           <Typography
             fontFamily="Montserrat"
             variant="subtitle2"
@@ -116,75 +115,73 @@ export default function Header(props: IProps) {
         </div>
       </div>
       <div className="header-nav">
-        <div className="nav">
-          <Typography
-            fontFamily="Montserrat"
-            color="#252B42"
-            variant="h4"
-            fontWeight="700"
-          >
-            Bandage
-          </Typography>
-          <nav>
-            <NavLink href="/">
+        <Typography
+          fontFamily="Montserrat"
+          color="#252B42"
+          variant="h4"
+          fontWeight="700"
+        >
+          Bandage
+        </Typography>
+        <nav>
+          <NavLink href="/">
+            <Typography
+              fontFamily="Montserrat"
+              variant="subtitle2"
+              fontWeight="700"
+            >
+              Home
+            </Typography>
+          </NavLink>
+          <NavLink href="#">
+            <div className="shop-nav">
               <Typography
                 fontFamily="Montserrat"
                 variant="subtitle2"
                 fontWeight="700"
               >
-                Home
+                Shop
               </Typography>
-            </NavLink>
-            <NavLink href="#">
-              <div className="shop-nav">
-                <Typography
-                  fontFamily="Montserrat"
-                  variant="subtitle2"
-                  fontWeight="700"
-                >
-                  Shop
-                </Typography>
-                <KeyboardArrowDownIcon fontSize="small" />
-              </div>
-            </NavLink>
-            <NavLink href="#">
-              <Typography
-                fontFamily="Montserrat"
-                variant="subtitle2"
-                fontWeight="700"
-              >
-                About
-              </Typography>
-            </NavLink>
-            <NavLink href="#">
-              <Typography
-                fontFamily="Montserrat"
-                variant="subtitle2"
-                fontWeight="700"
-              >
-                Blog
-              </Typography>
-            </NavLink>
-            <NavLink href="#">
-              <Typography
-                fontFamily="Montserrat"
-                variant="subtitle2"
-                fontWeight="700"
-              >
-                Contact
-              </Typography>
-            </NavLink>
-            <NavLink href="#">
-              <Typography
-                fontFamily="Montserrat"
-                variant="subtitle2"
-                fontWeight="700"
-              >
-                Pages
-              </Typography>
-            </NavLink>
-          </nav>
-        </div>
+              <KeyboardArrowDownIcon fontSize="small" />
+            </div>
+          </NavLink>
+          <NavLink href="#">
+            <Typography
+              fontFamily="Montserrat"
+              variant="subtitle2"
+              fontWeight="700"
+            >
+              About
+            </Typography>
+          </NavLink>
+          <NavLink href="#">
+            <Typography
+              fontFamily="Montserrat"
+              variant="subtitle2"
+              fontWeight="700"
+            >
+              Blog
+            </Typography>
+          </NavLink>
+          <NavLink href="#">
+            <Typography
+              fontFamily="Montserrat"
+              variant="subtitle2"
+              fontWeight="700"
+            >
+              Contact
+            </Typography>
+          </NavLink>
+          <NavLink href="#">
+            <Typography
+              fontFamily="Montserrat"
+              variant="subtitle2"
+              fontWeight="700"
+            >
+              Pages
+            </Typography>
+          </NavLink>
+        </nav>
         <div className="user">
           {session ? (
             <div className="user-login" onClick={() => signOut()}>

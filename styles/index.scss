@@ -127,6 +127,12 @@ a {
   }
   .footer-pad {
     padding-bottom: 33em;
+    @include respond(laptop) {
+      padding-bottom: 41.5em;
+    }
+    @include respond(tablet) {
+      padding-bottom: 51.5em;
+    }
     @include respond(mini-tablet) {
       padding-bottom: 80.5em;
     }
@@ -141,6 +147,13 @@ a {
     height: 3.6em;
     padding: 0 4em;
     @include flex_center();
+    @include respond(laptop) {
+      height: 5em;
+      padding: 0 2em;
+    }
+    @include respond(tablet) {
+      padding: 0 1em;
+    }
     @include respond(mini-tablet) {
       display: none;
     }
@@ -148,6 +161,10 @@ a {
     .social-contact {
       @include flex_basic();
       gap: 1em;
+      @include respond(laptop) {
+        flex-direction: column;
+        gap: 0;
+      }
       .social-phone {
         @include flex_basic();
       }
@@ -155,10 +172,19 @@ a {
         @include flex_basic();
       }
     }
+    .follow {
+      @include respond(tablet) {
+        max-width: 30%;
+      }
+    }
     .social-media {
       @include flex_basic();
       gap: 0.7em;
       align-items: flex-start;
+      @include respond(tablet) {
+        gap: 0.4em;
+        text-align: center;
+      }
       a {
         color: inherit;
         text-decoration: none;
@@ -168,25 +194,38 @@ a {
   }
   .header-nav {
     @include flex_center();
+    width: 100%;
     height: 3.6em;
     padding: 0 4em;
     margin-top: 0.5em;
+    @include respond(laptop) {
+      padding: 0 2em;
+    }
+    @include respond(tablet) {
+      padding: 0 1em;
+      gap: 1em;
+    }
     @include respond(mini-tablet) {
       display: none;
     }
-    .nav {
-      @include flex_basic();
-      gap: 8em;
 
-      nav {
-        @include flex_center();
-        gap: 1.4em;
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-        .shop-nav {
-          @include flex_basic();
+    nav {
+      @include flex_center();
+      gap: 1.4em;
+      @include respond(laptop) {
+        gap: 1em;
+      }
+      @include respond(tablet) {
+        gap: 0.5em;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .shop-nav {
+        @include flex_basic();
+        @include respond(tablet) {
+          gap: 0;
         }
       }
     }
@@ -195,11 +234,20 @@ a {
       align-items: center;
       gap: 1.5em;
       color: $color-primary;
+      @include respond(laptop) {
+        gap: 0.8em;
+      }
+      @include respond(tablet) {
+        gap: 0.3em;
+      }
       .user-login {
         @include flex_basic();
         gap: 0.5em;
         align-items: center;
         cursor: pointer;
+        @include respond(tablet) {
+          gap: 0;
+        }
       }
       .user-session {
         display: flex;
@@ -301,7 +349,16 @@ a {
     padding: 3em 8em;
     width: 100%;
     height: 100%;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
+      padding: 1.5em 4em;
+    }
+    @include respond(phone) {
       padding: 1.5em 2.5em;
     }
     .furniture-container {
@@ -398,9 +455,18 @@ a {
   }
   .products {
     padding: 3em 8em;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
-      padding: 1.5em 2.5em;
+      padding: 1.5em 4em;
       margin-top: 40em;
+    }
+    @include respond(phone) {
+      padding: 1.5em 2.5em;
     }
     a {
       color: inherit;
@@ -430,9 +496,18 @@ a {
   }
   .services {
     padding: 3em 8em;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
-      padding: 1.5em 2.5em;
+      padding: 1.5em 4em;
       margin-top: 3em;
+    }
+    @include respond(phone) {
+      padding: 1.5em 2.5em;
     }
     .product-header {
       @include product_header();
@@ -447,7 +522,16 @@ a {
   }
   .posts {
     padding: 1em 8em;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
+      padding: 1.5em 4em;
+    }
+    @include respond(phone) {
       padding: 1.5em 2.5em;
     }
     .product-header {
@@ -474,7 +558,16 @@ a {
   }
   .testimonies {
     padding: 3em 8em;
+    @include respond(laptop) {
+      padding: 1em 4em;
+    }
+    @include respond(tablet) {
+      padding: 1em 6em;
+    }
     @include respond(mini-tablet) {
+      padding: 1.5em 4em;
+    }
+    @include respond(phone) {
       padding: 1.5em 2.5em;
     }
     .testimonies-container {
@@ -482,22 +575,43 @@ a {
       display: flex;
       width: 100%;
       gap: 4em;
-      @include respond(mini-tablet) {
+      @include respond(laptop) {
+        gap: 2em;
+      }
+      @include respond(tablet) {
         flex-direction: column;
+        align-items: center;
+      }
+      @include respond(mini-tablet) {
         gap: 2em;
       }
       .testimony {
         width: 50%;
+        @include respond(tablet) {
+          width: 100%;
+        }
         @include respond(mini-tablet) {
           width: 100%;
         }
         .user-testimony {
+          @include respond(tablet) {
+            padding: 0em 4em;
+          }
+          @include respond(mini-tablet) {
+            padding: 0 2em;
+          }
+          @include respond(phone) {
+            padding: 0em;
+          }
           .testimony-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1.5em;
             margin-top: 4em;
+            @include respond(laptop) {
+              margin-top: 1.5em;
+            }
             .testimony-user {
               border-radius: 50%;
             }
@@ -506,6 +620,11 @@ a {
       }
       .test-photo {
         width: 50%;
+        @include respond(tablet) {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
         @include respond(mini-tablet) {
           width: 100%;
         }
@@ -524,6 +643,9 @@ a {
     background-position: top center;
     width: 100%;
     height: 640px;
+    @include respond(laptop) {
+      padding: 0 6em;
+    }
     @include respond(mini-tablet) {
       background-size: 300% 100%;
       height: 100%;
@@ -544,6 +666,12 @@ a {
   }
   .footer-pad {
     padding-bottom: 30em;
+    @include respond(laptop) {
+      padding-bottom: 41.5em;
+    }
+    @include respond(tablet) {
+      padding-bottom: 51.5em;
+    }
     @include respond(mini-tablet) {
       padding-bottom: 80.5em;
     }
@@ -555,7 +683,16 @@ a {
   .breadcrumb {
     padding: 2em 10em;
     background-color: $background-footer;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
+      padding: 1.5em 4em;
+    }
+    @include respond(phone) {
       padding: 1.5em 2.5em;
     }
     a {
@@ -573,9 +710,18 @@ a {
     padding: 0 10em;
     background-color: $background-footer;
     margin-top: -1em;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
-      padding: 0 2.5em;
+      padding: 1.5em 4em;
       flex-direction: column;
+    }
+    @include respond(phone) {
+      padding: 1.5em 2.5em;
     }
     .products-photo {
       width: 50%;
@@ -612,6 +758,12 @@ a {
       }
       .line-break {
         padding-top: 6em;
+        @include respond(laptop) {
+          padding-top: 5em;
+        }
+        @include respond(tablet) {
+          padding-top: 3em;
+        }
         @include respond(mini-tablet) {
           padding-top: 0;
         }
@@ -641,7 +793,16 @@ a {
   }
   .products-description {
     padding: 0 10em;
+    @include respond(laptop) {
+      padding: 0 6em;
+    }
+    @include respond(tablet) {
+      padding: 0 5em;
+    }
     @include respond(mini-tablet) {
+      padding: 0 4em;
+    }
+    @include respond(phone) {
       padding: 0 2.5em;
     }
     .desc-header {
@@ -689,6 +850,9 @@ a {
     }
     .desc-description {
       padding: 2em 1.5em 3em;
+      @include respond(laptop) {
+        padding: 2em 0 3em;
+      }
       .text {
         height: 5em;
         display: flex;
@@ -698,6 +862,9 @@ a {
       .add-info {
         display: flex;
         justify-content: space-between;
+        @include respond(laptop) {
+          gap: 1em;
+        }
         @include respond(mini-tablet) {
           flex-direction: column;
           gap: 2em;
@@ -707,6 +874,9 @@ a {
           display: flex;
           flex-direction: column;
           gap: 1.75em;
+          @include respond(tablet) {
+            width: 85%;
+          }
           @include respond(mini-tablet) {
             width: 100%;
           }
@@ -716,6 +886,12 @@ a {
           }
         }
         .add-info-image {
+          @include respond(tablet) {
+            width: 70%;
+            img {
+              width: 100%;
+            }
+          }
           @include respond(mini-tablet) {
             width: 100%;
             img {
@@ -729,7 +905,16 @@ a {
   }
   .other-products {
     padding: 3em 10em;
+    @include respond(laptop) {
+      padding: 1em 6em;
+    }
+    @include respond(tablet) {
+      padding: 1em 5em;
+    }
     @include respond(mini-tablet) {
+      padding: 1.5em 4em;
+    }
+    @include respond(phone) {
       padding: 1.5em 2.5em;
     }
     background-color: $background-footer;
@@ -756,13 +941,29 @@ a {
   .brands {
     padding: 4em 10em;
     background-color: $background-footer;
+    @include respond(laptop) {
+      padding: 4em 6em;
+    }
+    @include respond(tablet) {
+      padding: 3em 5em;
+    }
+    @include respond(mini-tablet) {
+      padding: 3em 4em;
+    }
+    @include respond(phone) {
+      padding: 3em 2.5em;
+    }
     @include respond(mini-tablet) {
       padding: 3em 2.5em;
     }
     .brand {
       display: flex;
       justify-content: space-between;
-      @include respond(mini-tablet) {
+      gap: 3em;
+      @include respond(tablet) {
+        flex-wrap: wrap;
+      }
+      @include respond(phone) {
         flex-direction: column;
         align-items: center;
         gap: 3em;
@@ -771,6 +972,12 @@ a {
   }
   .footer-pad {
     padding-bottom: 33em;
+    @include respond(laptop) {
+      padding-bottom: 41.5em;
+    }
+    @include respond(tablet) {
+      padding-bottom: 51.5em;
+    }
     @include respond(mini-tablet) {
       padding-bottom: 80.5em;
     }
@@ -787,6 +994,9 @@ a {
     background-color: $background-footer;
     @include flex_center();
     padding: 0 10em;
+    @include respond(laptop) {
+      padding: 0 6em;
+    }
     @include respond(mini-tablet) {
       padding: 3.5em;
       flex-direction: column;
@@ -812,13 +1022,23 @@ a {
     display: flex;
     justify-content: space-between;
     margin-top: 3em;
-    @include respond(mini-tablet) {
+    @include respond(laptop) {
       height: 100%;
-      flex-direction: column;
-      padding: 0 3.5em;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      padding: 0 6em;
       gap: 2em;
       margin-bottom: 2em;
     }
+    @include respond(tablet) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @include respond(mini-tablet) {
+      display: flex;
+      flex-direction: column;
+      padding: 0 3.5em;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -862,6 +1082,9 @@ a {
     padding: 0 10em;
     display: flex;
     align-items: center;
+    @include respond(laptop) {
+      padding: 0 6em;
+    }
     @include respond(mini-tablet) {
       height: 6em;
       justify-content: center;
